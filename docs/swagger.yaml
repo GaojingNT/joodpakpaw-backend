@@ -1,0 +1,6594 @@
+definitions:
+  dtos.ActionReport:
+    properties:
+      action:
+        enum:
+        - dismiss_report
+        - warn_user
+        - deactivate_property
+        - delete_review
+        - ban_user_review
+        - deactivate_all_properties
+        - unban_property
+        - unban_all_properties
+        - unban_review
+        type: string
+      adminNote:
+        type: string
+    required:
+    - action
+    - adminNote
+    type: object
+  dtos.AddPropertyToFavorite:
+    properties:
+      folderId:
+        type: integer
+      folderName:
+        maxLength: 255
+        type: string
+      propertyId:
+        type: integer
+    type: object
+  dtos.AdminActionUser:
+    properties:
+      adminNote:
+        type: string
+    type: object
+  dtos.CreateBooking:
+    properties:
+      bookingOrders:
+        items:
+          $ref: '#/definitions/dtos.CreateBookingOrder'
+        minItems: 1
+        type: array
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      guestId:
+        type: integer
+      guestNote:
+        maxLength: 255
+        type: string
+      numberOfPets:
+        minimum: 0
+        type: integer
+      petProfileIds:
+        items:
+          type: integer
+        type: array
+    required:
+    - bookingOrders
+    - guestId
+    type: object
+  dtos.CreateBookingOrder:
+    properties:
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      roomCategoryId:
+        type: integer
+      roomTypeId:
+        type: integer
+      roomsBooked:
+        minimum: 1
+        type: integer
+    required:
+    - checkInDate
+    - checkOutDate
+    - roomCategoryId
+    - roomsBooked
+    type: object
+  dtos.CreateReportProperty:
+    type: object
+  dtos.CreateReportReview:
+    type: object
+  dtos.CreateReportUnbanProperty:
+    type: object
+  dtos.CreateReportUnbanReview:
+    type: object
+  dtos.EncryptPasswordDto:
+    properties:
+      password:
+        minLength: 8
+        type: string
+    required:
+    - password
+    type: object
+  dtos.ForgotPasswordDto:
+    properties:
+      email:
+        maxLength: 50
+        type: string
+    required:
+    - email
+    type: object
+  dtos.GoogleSignInDto:
+    properties:
+      idToken:
+        type: string
+    required:
+    - idToken
+    type: object
+  dtos.RefreshTokenDto:
+    properties:
+      refreshToken:
+        type: string
+    required:
+    - refreshToken
+    type: object
+  dtos.ResendOTPDto:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  dtos.ResetPasswordDto:
+    properties:
+      confirmPassword:
+        type: string
+      email:
+        maxLength: 50
+        type: string
+      password:
+        minLength: 8
+        type: string
+      resetPasswordToken:
+        type: string
+    required:
+    - confirmPassword
+    - email
+    - password
+    - resetPasswordToken
+    type: object
+  dtos.SignInDto:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dtos.SignUpDto:
+    properties:
+      confirmPassword:
+        type: string
+      email:
+        type: string
+      firstName:
+        maxLength: 100
+        type: string
+      lastName:
+        maxLength: 100
+        type: string
+      password:
+        minLength: 8
+        type: string
+      phone:
+        maxLength: 20
+        type: string
+    required:
+    - confirmPassword
+    - email
+    - password
+    type: object
+  dtos.UpdateFolderName:
+    properties:
+      name:
+        maxLength: 255
+        minLength: 1
+        type: string
+    required:
+    - name
+    type: object
+  dtos.UpdatePropertyIsActive:
+    properties:
+      isActive:
+        type: boolean
+    required:
+    - isActive
+    type: object
+  dtos.VerifyOTPDto:
+    properties:
+      email:
+        type: string
+      otp:
+        type: string
+    required:
+    - email
+    - otp
+    type: object
+  exception.ErrorResponse:
+    properties:
+      code:
+        type: string
+      errors:
+        items:
+          $ref: '#/definitions/exception.ParameterError'
+        type: array
+      message:
+        type: string
+    type: object
+  exception.ParameterError:
+    properties:
+      field:
+        type: string
+      tag:
+        type: string
+      value:
+        type: string
+    type: object
+  http_response.OkResponse:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    type: object
+  joodpakpaw_src_modules_facility_category_module_responses.FacilityResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_facility_module_responses.FacilityResponse:
+    properties:
+      category:
+        $ref: '#/definitions/responses.CategoryResponse'
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_pet_module_responses.PetResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_pet_size_category_module_responses.PetSizeCategoryResponse:
+    properties:
+      code:
+        type: integer
+      id:
+        type: integer
+      max:
+        type: integer
+      min:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_property_module_responses.FacilityResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_property_module_responses.PetResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_property_module_responses.PropertyResponse:
+    properties:
+      address:
+        type: string
+      avgRating:
+        type: number
+      chatRoomId:
+        type: integer
+      country:
+        type: string
+      description:
+        type: string
+      district:
+        type: string
+      facilities:
+        items:
+          $ref: '#/definitions/responses.FacilityDetailResponse'
+        type: array
+      host:
+        $ref: '#/definitions/responses.HostProfileResponse'
+      hostAvgRating:
+        type: number
+      hostId:
+        type: integer
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/responses.PropertyImageDetailResponse'
+        type: array
+      isActive:
+        type: boolean
+      isBannedByAdmin:
+        type: boolean
+      latitude:
+        type: number
+      longitude:
+        type: number
+      propertyTypeId:
+        type: integer
+      province:
+        type: string
+      reviewCount:
+        type: integer
+      reviews:
+        items:
+          $ref: '#/definitions/responses.ReviewResponse'
+        type: array
+      roomCategories:
+        items:
+          $ref: '#/definitions/responses.RoomCategoryDetailResponse'
+        type: array
+      title:
+        type: string
+      totalRoomCategories:
+        type: integer
+      zipcode:
+        type: string
+    type: object
+  joodpakpaw_src_modules_property_module_responses.PropertyTypeResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_property_module_responses.RoomCategoryImageResponse:
+    properties:
+      fileContentType:
+        type: string
+      fileExtensionName:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      id:
+        type: integer
+    type: object
+  joodpakpaw_src_modules_property_module_responses.RoomCategoryResponse:
+    properties:
+      basePrice:
+        type: number
+      id:
+        type: integer
+      name:
+        type: string
+      totalRoom:
+        type: integer
+    type: object
+  joodpakpaw_src_modules_property_type_module_responses.PropertyTypeResponse:
+    properties:
+      id:
+        type: integer
+      label:
+        type: string
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_room_category_module_responses.FacilityResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_room_category_module_responses.PetResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_room_category_module_responses.PetSizeCategoryResponse:
+    properties:
+      code:
+        type: integer
+      id:
+        type: integer
+      max:
+        type: integer
+      min:
+        type: integer
+      name:
+        type: string
+    type: object
+  joodpakpaw_src_modules_room_category_module_responses.PropertyResponse:
+    properties:
+      address:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+  joodpakpaw_src_modules_room_category_module_responses.RoomCategoryImageResponse:
+    properties:
+      fileContentType:
+        type: string
+      fileExtensionName:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      id:
+        type: integer
+    type: object
+  joodpakpaw_src_modules_room_category_module_responses.RoomCategoryResponse:
+    properties:
+      basePrice:
+        type: number
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.RoomCategoryImageResponse'
+        type: array
+      name:
+        type: string
+      numberOfPets:
+        type: integer
+      petSizeCategoryName:
+        type: string
+      pets:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.PetResponse'
+        type: array
+      propertyId:
+        type: integer
+      totalRoom:
+        type: integer
+    type: object
+  models.BookingStatus:
+    enum:
+    - pending
+    - confirmed
+    - cancelled
+    - successful
+    type: string
+    x-enum-varnames:
+    - BookingStatusPending
+    - BookingStatusConfirmed
+    - BookingStatusCancelled
+    - BookingStatusSuccessful
+  models.NotificationCategory:
+    enum:
+    - message
+    - reminder
+    - news
+    - alert
+    type: string
+    x-enum-varnames:
+    - NotificationCategoryMessage
+    - NotificationCategoryReminder
+    - NotificationCategoryNews
+    - NotificationCategoryAlert
+  models.NotificationType:
+    enum:
+    - success
+    - info
+    - warning
+    - error
+    - default
+    type: string
+    x-enum-varnames:
+    - NotificationTypeSuccess
+    - NotificationTypeInfo
+    - NotificationTypeWarning
+    - NotificationTypeError
+    - NotificationTypeDefault
+  models.PetSex:
+    enum:
+    - male
+    - female
+    - other
+    type: string
+    x-enum-varnames:
+    - PetSexMale
+    - PetSexFemale
+    - PetSexOther
+  models.ReportAction:
+    enum:
+    - dismiss_report
+    - warn_user
+    - deactivate_property
+    - delete_review
+    - ban_user_review
+    - deactivate_all_properties
+    - unban_property
+    - unban_all_properties
+    - unban_review
+    type: string
+    x-enum-varnames:
+    - ReportActionDismissReport
+    - ReportActionWarnUser
+    - ReportActionDeactivateProperty
+    - ReportActionDeleteReview
+    - ReportActionBanUserReview
+    - ReportActionDeactivateProperties
+    - ReportActionUnbanProperty
+    - ReportActionUnbanAllProperties
+    - ReportActionUnbanReview
+  models.ReportStatus:
+    enum:
+    - pending
+    - resolved
+    - dismissed
+    type: string
+    x-enum-varnames:
+    - ReportStatusPending
+    - ReportStatusResolved
+    - ReportStatusDismissed
+  models.ReportType:
+    enum:
+    - review
+    - property
+    - unban_property
+    - unban_review
+    type: string
+    x-enum-varnames:
+    - ReportTypeReview
+    - ReportTypeProperty
+    - ReportTypeUnbanProperty
+    - ReportTypeUnbanReview
+  paginator.Pagination:
+    properties:
+      attributes:
+        additionalProperties: true
+        type: object
+      data: {}
+      limit:
+        type: integer
+      orderBy:
+        type: string
+      page:
+        type: integer
+      sort:
+        type: string
+      totalPages:
+        type: integer
+      totalRows:
+        type: integer
+    type: object
+  responses.AddPropertyToFavoriteResponse:
+    properties:
+      id:
+        type: integer
+      message:
+        type: string
+      name:
+        type: string
+      propertyCount:
+        type: integer
+    type: object
+  responses.AdminGetPropertyByIDResponse:
+    properties:
+      createdAt:
+        type: string
+      hostProfile:
+        $ref: '#/definitions/responses.AdminHostProfileResponse'
+      id:
+        type: integer
+      isActive:
+        type: boolean
+      isBannedByAdmin:
+        type: boolean
+      reportCount:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  responses.AdminGetUserByIDResponse:
+    properties:
+      avatar:
+        type: string
+      createdAt:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      isBannedAllProperties:
+        type: boolean
+      isBannedReview:
+        type: boolean
+      isVerifiedHost:
+        type: boolean
+      lastName:
+        type: string
+      roles:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+      violations:
+        type: integer
+    type: object
+  responses.AdminHostProfileResponse:
+    properties:
+      avatar:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+    type: object
+  responses.AttachmentItem:
+    properties:
+      contentType:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      id:
+        type: integer
+    type: object
+  responses.AvailabilityResponse:
+    properties:
+      availableRooms:
+        type: integer
+      dates:
+        items:
+          $ref: '#/definitions/responses.DateAvailability'
+        type: array
+      roomsNeeded:
+        type: integer
+      totalPrice:
+        type: number
+    type: object
+  responses.AvailableRoomCategoryResponse:
+    properties:
+      availability:
+        $ref: '#/definitions/responses.AvailabilityResponse'
+      facilities:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.FacilityResponse'
+        type: array
+      id:
+        type: integer
+      isAvailable:
+        type: boolean
+      isBooked:
+        type: boolean
+      isCapacityInsufficient:
+        type: boolean
+      name:
+        type: string
+      numberOfPets:
+        type: integer
+      petSizeCategory:
+        $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.PetSizeCategoryResponse'
+      pets:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.PetResponse'
+        type: array
+      property:
+        $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.PropertyResponse'
+      totalRoom:
+        type: integer
+    type: object
+  responses.BookingForHostItem:
+    properties:
+      bookingStatus:
+        $ref: '#/definitions/models.BookingStatus'
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      createdAt:
+        type: string
+      guest:
+        $ref: '#/definitions/responses.GuestInfo'
+      guestNote:
+        type: string
+      id:
+        type: integer
+      numberOfPets:
+        type: integer
+      property:
+        $ref: '#/definitions/responses.PropertySummary'
+      rating:
+        type: integer
+      totalPrice:
+        type: number
+    type: object
+  responses.BookingForPropertyItem:
+    properties:
+      bookingStatus:
+        $ref: '#/definitions/models.BookingStatus'
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      createdAt:
+        type: string
+      guest:
+        $ref: '#/definitions/responses.GuestInfo'
+      guestNote:
+        type: string
+      id:
+        type: integer
+      numberOfPets:
+        type: integer
+      roomCategories:
+        items:
+          $ref: '#/definitions/responses.RoomCategorySummary'
+        type: array
+      totalPrice:
+        type: number
+    type: object
+  responses.BookingListItem:
+    properties:
+      bookingStatus:
+        $ref: '#/definitions/models.BookingStatus'
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      numberOfPets:
+        type: integer
+      property:
+        $ref: '#/definitions/responses.PropertySummary'
+      rating:
+        type: integer
+      totalPrice:
+        type: number
+    type: object
+  responses.BookingOrderDetail:
+    properties:
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      id:
+        type: integer
+      pricePerRoom:
+        type: number
+      property:
+        $ref: '#/definitions/responses.PropertyInfo'
+      propertyId:
+        type: integer
+      roomCategory:
+        $ref: '#/definitions/responses.RoomCategoryInfo'
+      roomCategoryId:
+        type: integer
+      roomTypeId:
+        type: integer
+      roomsBooked:
+        type: integer
+      totalPrice:
+        type: number
+    type: object
+  responses.BookingOrderResponse:
+    properties:
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      id:
+        type: integer
+      pricePerRoom:
+        type: number
+      propertyId:
+        type: integer
+      roomCategoryCalendarId:
+        type: integer
+      roomCategoryId:
+        type: integer
+      roomTypeId:
+        type: integer
+      roomsBooked:
+        type: integer
+      totalPrice:
+        type: number
+    type: object
+  responses.BookingReviewImageResponse:
+    properties:
+      fileContentType:
+        type: string
+      fileExtensionName:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      id:
+        type: integer
+    type: object
+  responses.CategoryResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  responses.ChatRoomItem:
+    properties:
+      id:
+        type: integer
+      lastMessage:
+        $ref: '#/definitions/responses.LastMessageItem'
+      lastMessageAt:
+        type: string
+      otherUser:
+        $ref: '#/definitions/responses.UserSummary'
+    type: object
+  responses.CreateBookingResponse:
+    properties:
+      bookingOrders:
+        items:
+          $ref: '#/definitions/responses.BookingOrderResponse'
+        type: array
+      bookingStatus:
+        $ref: '#/definitions/models.BookingStatus'
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      createdAt:
+        type: string
+      guestId:
+        type: integer
+      guestNote:
+        type: string
+      id:
+        type: integer
+      numberOfPets:
+        type: integer
+      petProfiles:
+        items:
+          $ref: '#/definitions/responses.PetProfileInfo'
+        type: array
+      totalPrice:
+        type: number
+      updatedAt:
+        type: string
+    type: object
+  responses.CreateBookingReviewResponse:
+    properties:
+      bookingStatus:
+        type: string
+      comment:
+        type: string
+      id:
+        type: integer
+      rating:
+        type: integer
+      reviewImages:
+        items:
+          $ref: '#/definitions/responses.BookingReviewImageResponse'
+        type: array
+    type: object
+  responses.CreateChatRoomResponse:
+    properties:
+      id:
+        type: integer
+      message:
+        $ref: '#/definitions/responses.MessageItem'
+      otherUser:
+        $ref: '#/definitions/responses.UserSummary'
+    type: object
+  responses.CreatePetProfileResponse:
+    properties:
+      birthDate:
+        type: string
+      contactName:
+        type: string
+      contactPhone:
+        type: string
+      createdAt:
+        type: string
+      guestId:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      name:
+        type: string
+      note:
+        type: string
+      petBreedId:
+        type: integer
+      petEnergyId:
+        type: integer
+      petId:
+        type: integer
+      petSizeId:
+        type: integer
+      sex:
+        $ref: '#/definitions/models.PetSex'
+    type: object
+  responses.CreatePropertyResponse:
+    properties:
+      code:
+        type: string
+      data:
+        $ref: '#/definitions/responses.PropertyCreatedData'
+      message:
+        type: string
+    type: object
+  responses.CreateReportResponse:
+    properties:
+      bookingId:
+        type: integer
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      propertyId:
+        type: integer
+      reportCategoryId:
+        type: integer
+      reporterId:
+        type: integer
+      status:
+        $ref: '#/definitions/models.ReportStatus'
+      type:
+        $ref: '#/definitions/models.ReportType'
+    type: object
+  responses.CreateUserBehaviorResponse:
+    properties:
+      behaviorCategory:
+        type: string
+      id:
+        type: integer
+      referenceRecord:
+        type: string
+      referenceTable:
+        type: string
+      userId:
+        type: integer
+      viewedAt:
+        type: string
+    type: object
+  responses.CreateUserRecentViewResponse:
+    properties:
+      id:
+        type: integer
+      propertyId:
+        type: integer
+      userId:
+        type: integer
+      viewedAt:
+        type: string
+    type: object
+  responses.DashboardResponse:
+    properties:
+      activeProperties:
+        $ref: '#/definitions/responses.StatWithChange'
+      bannedHosts:
+        $ref: '#/definitions/responses.StatWithChange'
+      pendingReports:
+        $ref: '#/definitions/responses.StatWithChange'
+      pendingVerifications:
+        $ref: '#/definitions/responses.StatWithChange'
+      totalUsers:
+        $ref: '#/definitions/responses.StatWithChange'
+    type: object
+  responses.DateAvailability:
+    properties:
+      availableRooms:
+        type: integer
+      date:
+        type: string
+      finalPrice:
+        type: number
+      priceAdjustment:
+        type: number
+    type: object
+  responses.DeleteFolderResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  responses.FacilityCategoryResponse:
+    properties:
+      facilities:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_facility_category_module_responses.FacilityResponse'
+        type: array
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  responses.FacilityDetailResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  responses.FavoriteFolderListItem:
+    properties:
+      createdAt:
+        type: string
+      firstPropertyImage:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      propertyCount:
+        type: integer
+    type: object
+  responses.FavoritePropertyListItem:
+    properties:
+      district:
+        type: string
+      firstImage:
+        type: string
+      id:
+        type: integer
+      province:
+        type: string
+      title:
+        type: string
+    type: object
+  responses.GetAllPropertiesResponse:
+    properties:
+      properties:
+        items:
+          $ref: '#/definitions/responses.PropertyListResponse'
+        type: array
+    type: object
+  responses.GetBookingByIDForHostResponse:
+    properties:
+      bookingOrders:
+        items:
+          $ref: '#/definitions/responses.BookingOrderDetail'
+        type: array
+      bookingStatus:
+        $ref: '#/definitions/models.BookingStatus'
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      comment:
+        type: string
+      confirmedAt:
+        type: string
+      createdAt:
+        type: string
+      guest:
+        $ref: '#/definitions/responses.GuestDetailInfo'
+      guestNote:
+        type: string
+      id:
+        type: integer
+      numberOfPets:
+        type: integer
+      petProfiles:
+        items:
+          $ref: '#/definitions/responses.PetProfileInfo'
+        type: array
+      rating:
+        type: integer
+      successedAt:
+        type: string
+      totalPrice:
+        type: number
+      updatedAt:
+        type: string
+    type: object
+  responses.GetBookingByIDForPropertyResponse:
+    properties:
+      bookingOrders:
+        items:
+          $ref: '#/definitions/responses.BookingOrderDetail'
+        type: array
+      bookingStatus:
+        $ref: '#/definitions/models.BookingStatus'
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      confirmedAt:
+        type: string
+      createdAt:
+        type: string
+      guest:
+        $ref: '#/definitions/responses.GuestDetailInfo'
+      guestNote:
+        type: string
+      id:
+        type: integer
+      numberOfPets:
+        type: integer
+      petProfiles:
+        items:
+          $ref: '#/definitions/responses.PetProfileInfo'
+        type: array
+      successedAt:
+        type: string
+      totalPrice:
+        type: number
+      updatedAt:
+        type: string
+    type: object
+  responses.GetBookingByIDResponse:
+    properties:
+      bookingOrders:
+        items:
+          $ref: '#/definitions/responses.BookingOrderDetail'
+        type: array
+      bookingStatus:
+        $ref: '#/definitions/models.BookingStatus'
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      comment:
+        type: string
+      confirmedAt:
+        type: string
+      createdAt:
+        type: string
+      guest:
+        $ref: '#/definitions/responses.UserInfo'
+      guestId:
+        type: integer
+      guestNote:
+        type: string
+      id:
+        type: integer
+      numberOfPets:
+        type: integer
+      petProfiles:
+        items:
+          $ref: '#/definitions/responses.PetProfileInfo'
+        type: array
+      rating:
+        type: integer
+      successedAt:
+        type: string
+      totalPrice:
+        type: number
+      updatedAt:
+        type: string
+    type: object
+  responses.GetBookingsForHostResponse:
+    properties:
+      bookings:
+        items:
+          $ref: '#/definitions/responses.BookingForHostItem'
+        type: array
+    type: object
+  responses.GetBookingsForPropertyResponse:
+    properties:
+      bookings:
+        items:
+          $ref: '#/definitions/responses.BookingForPropertyItem'
+        type: array
+    type: object
+  responses.GetBookingsResponse:
+    properties:
+      bookings:
+        items:
+          $ref: '#/definitions/responses.BookingListItem'
+        type: array
+    type: object
+  responses.GetChatRoomByIdResponse:
+    properties:
+      id:
+        type: integer
+      lastMessageAt:
+        type: string
+      messages:
+        items:
+          $ref: '#/definitions/responses.MessageItem'
+        type: array
+      otherUser:
+        $ref: '#/definitions/responses.UserSummary'
+    type: object
+  responses.GetChatRoomsResponse:
+    properties:
+      chatRooms:
+        items:
+          $ref: '#/definitions/responses.ChatRoomItem'
+        type: array
+    type: object
+  responses.GetFacilitiesResponse:
+    properties:
+      facilities:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_facility_module_responses.FacilityResponse'
+        type: array
+    type: object
+  responses.GetFacilityByIDResponse:
+    properties:
+      category:
+        $ref: '#/definitions/responses.CategoryResponse'
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  responses.GetFacilityCategoriesResponse:
+    properties:
+      facilityCategories:
+        items:
+          $ref: '#/definitions/responses.FacilityCategoryResponse'
+        type: array
+    type: object
+  responses.GetFacilityCategoryByIDResponse:
+    properties:
+      facilities:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_facility_category_module_responses.FacilityResponse'
+        type: array
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  responses.GetFavoriteFolderByIdResponse:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      properties:
+        items:
+          $ref: '#/definitions/responses.FavoritePropertyListItem'
+        type: array
+    type: object
+  responses.GetFavoriteFoldersResponse:
+    properties:
+      favoriteFolders:
+        items:
+          $ref: '#/definitions/responses.FavoriteFolderListItem'
+        type: array
+    type: object
+  responses.GetHostProfileResponse:
+    properties:
+      code:
+        type: string
+      host:
+        $ref: '#/definitions/responses.HostProfileDetailResponse'
+      message:
+        type: string
+    type: object
+  responses.GetNotificationsResponse:
+    properties:
+      notifications:
+        items:
+          $ref: '#/definitions/responses.NotificationResponse'
+        type: array
+    type: object
+  responses.GetPetBreedByIDResponse:
+    properties:
+      breed:
+        type: string
+      id:
+        type: integer
+      imageUrl:
+        type: string
+      petId:
+        type: integer
+      petName:
+        type: string
+    type: object
+  responses.GetPetBreedsResponse:
+    properties:
+      petBreeds:
+        items:
+          $ref: '#/definitions/responses.PetBreedResponse'
+        type: array
+    type: object
+  responses.GetPetProfileByIDResponse:
+    properties:
+      birthDate:
+        type: string
+      contactName:
+        type: string
+      contactPhone:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      name:
+        type: string
+      note:
+        type: string
+      petBreedName:
+        type: string
+      petSizeName:
+        type: string
+      rating:
+        type: integer
+      sex:
+        $ref: '#/definitions/models.PetSex'
+    type: object
+  responses.GetPetProfilesResponse:
+    properties:
+      petProfiles:
+        items:
+          $ref: '#/definitions/responses.PetProfileListItem'
+        type: array
+    type: object
+  responses.GetPetSizeCategoriesResponse:
+    properties:
+      petSizeCategories:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_pet_size_category_module_responses.PetSizeCategoryResponse'
+        type: array
+    type: object
+  responses.GetPetsResponse:
+    properties:
+      pets:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_pet_module_responses.PetResponse'
+        type: array
+    type: object
+  responses.GetPropertiesForHostResponse:
+    properties:
+      properties:
+        items:
+          $ref: '#/definitions/responses.PropertiesForHostResponse'
+        type: array
+    type: object
+  responses.GetPropertyByIDResponse:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      property:
+        $ref: '#/definitions/joodpakpaw_src_modules_property_module_responses.PropertyResponse'
+    type: object
+  responses.GetPropertyForHostByIDResponse:
+    properties:
+      property:
+        $ref: '#/definitions/responses.PropertyForHostDetailResponse'
+    type: object
+  responses.GetPropertyTypeByIDResponse:
+    properties:
+      id:
+        type: integer
+      label:
+        type: string
+      name:
+        type: string
+    type: object
+  responses.GetPropertyTypesResponse:
+    properties:
+      propertyTypes:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_property_type_module_responses.PropertyTypeResponse'
+        type: array
+    type: object
+  responses.GetReportByIDResponse:
+    properties:
+      adminNote:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/responses.ReportImageResponse'
+        type: array
+      propOwner:
+        $ref: '#/definitions/responses.UserDetailResponse'
+      property:
+        $ref: '#/definitions/responses.PropertyBriefResponse'
+      reportCategoryLabel:
+        type: string
+      reporter:
+        $ref: '#/definitions/responses.UserDetailResponse'
+      resolvedAction:
+        $ref: '#/definitions/models.ReportAction'
+      reviewAuthor:
+        allOf:
+        - $ref: '#/definitions/responses.UserDetailResponse'
+        description: type=review only
+      status:
+        $ref: '#/definitions/models.ReportStatus'
+      type:
+        $ref: '#/definitions/models.ReportType'
+    type: object
+  responses.GetReportCategoriesResponse:
+    properties:
+      reportCategories:
+        items:
+          $ref: '#/definitions/responses.ReportCategoryResponse'
+        type: array
+    type: object
+  responses.GetRoomCategoriesResponse:
+    properties:
+      roomCategories:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.RoomCategoryResponse'
+        type: array
+    type: object
+  responses.GetRoomCategoryByIDResponse:
+    properties:
+      basePrice:
+        type: number
+      facilities:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.FacilityResponse'
+        type: array
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.RoomCategoryImageResponse'
+        type: array
+      name:
+        type: string
+      numberOfPets:
+        type: integer
+      petSizeCategory:
+        $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.PetSizeCategoryResponse'
+      pets:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_room_category_module_responses.PetResponse'
+        type: array
+      propertyId:
+        type: integer
+      totalRoom:
+        type: integer
+    type: object
+  responses.GetUserBehaviorsResponse:
+    properties:
+      userBehaviors:
+        items:
+          $ref: '#/definitions/responses.UserBehaviorItem'
+        type: array
+    type: object
+  responses.GetUserByIDResponse:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      user:
+        $ref: '#/definitions/responses.UserResponse'
+    type: object
+  responses.GetVerificationByIDResponse:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      verification:
+        $ref: '#/definitions/responses.VerificationDetailItem'
+    type: object
+  responses.GuestDetailInfo:
+    properties:
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      phone:
+        type: string
+      userId:
+        type: integer
+    type: object
+  responses.GuestInfo:
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      userId:
+        type: integer
+    type: object
+  responses.HostProfileDetailResponse:
+    properties:
+      avatar:
+        type: string
+      avgRating:
+        type: number
+      chatRoomId:
+        type: integer
+      createdAt:
+        type: string
+      firstName:
+        type: string
+      hasPendingUnbanAllPropertiesRequest:
+        type: boolean
+      id:
+        type: integer
+      isBannedAllProperties:
+        type: boolean
+      isVerifiedHost:
+        type: boolean
+      lastName:
+        type: string
+      properties:
+        items:
+          $ref: '#/definitions/responses.PropertyListResponse'
+        type: array
+      reviewCount:
+        type: integer
+      roles:
+        items:
+          type: string
+        type: array
+      totalProperties:
+        type: integer
+      unbanAllPropertiesRequestCount:
+        type: integer
+    type: object
+  responses.HostProfileResponse:
+    properties:
+      avatar:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      isVerifiedHost:
+        type: boolean
+      lastName:
+        type: string
+    type: object
+  responses.LastMessageItem:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+      readAt:
+        type: string
+      senderId:
+        type: integer
+    type: object
+  responses.MessageItem:
+    properties:
+      attachments:
+        items:
+          $ref: '#/definitions/responses.AttachmentItem'
+        type: array
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      readAt:
+        type: string
+      sender:
+        $ref: '#/definitions/responses.UserSummary'
+    type: object
+  responses.NotificationResponse:
+    properties:
+      actionName:
+        type: string
+      category:
+        $ref: '#/definitions/models.NotificationCategory'
+      createdAt:
+        type: string
+      id:
+        type: integer
+      isRead:
+        type: boolean
+      message:
+        type: string
+      referenceId:
+        type: integer
+      referenceTable:
+        type: string
+      roleName:
+        type: string
+      title:
+        type: string
+      type:
+        $ref: '#/definitions/models.NotificationType'
+    type: object
+  responses.PetBreedResponse:
+    properties:
+      breed:
+        type: string
+      id:
+        type: integer
+      imageUrl:
+        type: string
+      petId:
+        type: integer
+      petName:
+        type: string
+    type: object
+  responses.PetDetailResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  responses.PetEnergyInfo:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      rating:
+        type: integer
+    type: object
+  responses.PetProfileInfo:
+    properties:
+      birthDate:
+        type: string
+      breedName:
+        type: string
+      contactName:
+        type: string
+      contactPhone:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      name:
+        type: string
+      note:
+        type: string
+      petEnergy:
+        $ref: '#/definitions/responses.PetEnergyInfo'
+      petSizeName:
+        type: string
+      petTypeName:
+        type: string
+      sex:
+        type: string
+    type: object
+  responses.PetProfileListItem:
+    properties:
+      age:
+        type: integer
+      birthDate:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      name:
+        type: string
+      petSizeCategoryId:
+        type: integer
+      petTypeName:
+        type: string
+    type: object
+  responses.PropertiesForHostResponse:
+    properties:
+      avgRating:
+        type: number
+      district:
+        type: string
+      hasPendingUnbanRequest:
+        type: boolean
+      hostId:
+        type: integer
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/responses.PropertyImageResponse'
+        type: array
+      isActive:
+        type: boolean
+      isBannedBeforeAccountBan:
+        type: boolean
+      isBannedByAdmin:
+        type: boolean
+      province:
+        type: string
+      publishedAt:
+        type: string
+      roomCount:
+        type: integer
+      title:
+        type: string
+      totalRoomCategories:
+        type: integer
+      unbanRequestCount:
+        type: integer
+    type: object
+  responses.PropertyBriefResponse:
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+  responses.PropertyCreatedData:
+    properties:
+      id:
+        type: integer
+    type: object
+  responses.PropertyForHostDetailResponse:
+    properties:
+      avgRating:
+        type: number
+      country:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      district:
+        type: string
+      facilities:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_property_module_responses.FacilityResponse'
+        type: array
+      hasPendingUnbanRequest:
+        type: boolean
+      host:
+        $ref: '#/definitions/responses.HostProfileResponse'
+      hostAvgRating:
+        type: number
+      hostId:
+        type: integer
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/responses.PropertyImageResponse'
+        type: array
+      isActive:
+        type: boolean
+      isBannedBeforeAccountBan:
+        type: boolean
+      isBannedByAdmin:
+        type: boolean
+      latitude:
+        type: number
+      longitude:
+        type: number
+      propertyType:
+        $ref: '#/definitions/joodpakpaw_src_modules_property_module_responses.PropertyTypeResponse'
+      propertyTypeId:
+        type: integer
+      province:
+        type: string
+      publishedAt:
+        type: string
+      reviewCount:
+        type: integer
+      reviews:
+        items:
+          $ref: '#/definitions/responses.ReviewResponse'
+        type: array
+      roomCategories:
+        items:
+          $ref: '#/definitions/responses.RoomCategoryInfoResponse'
+        type: array
+      title:
+        type: string
+      totalRoomCategories:
+        type: integer
+      unbanRequestCount:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  responses.PropertyImageDetailResponse:
+    properties:
+      fileContentType:
+        type: string
+      fileExtensionName:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      id:
+        type: integer
+    type: object
+  responses.PropertyImageResponse:
+    properties:
+      fileContentType:
+        type: string
+      fileExtensionName:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      id:
+        type: integer
+    type: object
+  responses.PropertyInfo:
+    properties:
+      address:
+        type: string
+      district:
+        type: string
+      id:
+        type: integer
+      province:
+        type: string
+      title:
+        type: string
+    type: object
+  responses.PropertyListResponse:
+    properties:
+      avgRating:
+        type: number
+      bookingCount:
+        type: integer
+      country:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      district:
+        type: string
+      hostId:
+        type: integer
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/responses.PropertyImageResponse'
+        type: array
+      isActive:
+        type: boolean
+      isBannedBeforeAccountBan:
+        type: boolean
+      isBannedByAdmin:
+        type: boolean
+      isFavorite:
+        type: boolean
+      latitude:
+        type: number
+      longitude:
+        type: number
+      pets:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_property_module_responses.PetResponse'
+        type: array
+      propertyTypeId:
+        type: integer
+      province:
+        type: string
+      publishedAt:
+        type: string
+      roomCategories:
+        $ref: '#/definitions/joodpakpaw_src_modules_property_module_responses.RoomCategoryResponse'
+      title:
+        type: string
+      totalRoomCategories:
+        type: integer
+      zipcode:
+        type: string
+    type: object
+  responses.PropertySummary:
+    properties:
+      id:
+        type: integer
+      province:
+        type: string
+      roomCategories:
+        items:
+          $ref: '#/definitions/responses.RoomCategorySummary'
+        type: array
+      title:
+        type: string
+    type: object
+  responses.RemovePropertyFromAllFoldersResponse:
+    properties:
+      foldersAffected:
+        type: integer
+      foldersDeleted:
+        type: integer
+      message:
+        type: string
+    type: object
+  responses.ReportCategoryResponse:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      label:
+        type: string
+      name:
+        type: string
+      type:
+        $ref: '#/definitions/models.ReportType'
+      updatedAt:
+        type: string
+    type: object
+  responses.ReportImageResponse:
+    properties:
+      fileContentType:
+        type: string
+      fileExtensionName:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      id:
+        type: integer
+    type: object
+  responses.ReviewImageResponse:
+    properties:
+      fileContentType:
+        type: string
+      fileExtensionName:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      id:
+        type: integer
+    type: object
+  responses.ReviewResponse:
+    properties:
+      avatar:
+        type: string
+      bookingId:
+        type: integer
+      comment:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      rating:
+        type: integer
+      reviewImages:
+        items:
+          $ref: '#/definitions/responses.ReviewImageResponse'
+        type: array
+    type: object
+  responses.RoomCategoryDetailResponse:
+    properties:
+      basePrice:
+        type: number
+      facilities:
+        items:
+          $ref: '#/definitions/responses.FacilityDetailResponse'
+        type: array
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/responses.RoomCategoryImageDetailResponse'
+        type: array
+      name:
+        type: string
+      numberOfPets:
+        type: integer
+      pets:
+        items:
+          $ref: '#/definitions/responses.PetDetailResponse'
+        type: array
+      totalRoom:
+        type: integer
+    type: object
+  responses.RoomCategoryImageDetailResponse:
+    properties:
+      fileContentType:
+        type: string
+      fileExtensionName:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      id:
+        type: integer
+    type: object
+  responses.RoomCategoryInfo:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  responses.RoomCategoryInfoResponse:
+    properties:
+      basePrice:
+        type: number
+      facilities:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_property_module_responses.FacilityResponse'
+        type: array
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/joodpakpaw_src_modules_property_module_responses.RoomCategoryImageResponse'
+        type: array
+      name:
+        type: string
+      numberOfPets:
+        type: integer
+      pets:
+        items:
+          $ref: '#/definitions/responses.RoomPetResponse'
+        type: array
+      totalRoom:
+        type: integer
+    type: object
+  responses.RoomCategorySummary:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      roomsBooked:
+        type: integer
+    type: object
+  responses.RoomPetResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  responses.SearchAvailableRoomCategoriesResponse:
+    properties:
+      roomCategories:
+        items:
+          $ref: '#/definitions/responses.AvailableRoomCategoryResponse'
+        type: array
+    type: object
+  responses.SendMessageResponse:
+    properties:
+      attachments:
+        items:
+          $ref: '#/definitions/responses.AttachmentItem'
+        type: array
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      readAt:
+        type: string
+      sender:
+        $ref: '#/definitions/responses.UserSummary'
+    type: object
+  responses.StatWithChange:
+    properties:
+      thisMonth:
+        type: integer
+      total:
+        type: integer
+    type: object
+  responses.UpdateFolderNameResponse:
+    properties:
+      id:
+        type: integer
+      message:
+        type: string
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  responses.UserBehaviorItem:
+    properties:
+      behaviorCategory:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      referenceRecord:
+        type: string
+      referenceTable:
+        type: string
+      userId:
+        type: integer
+    type: object
+  responses.UserDetailResponse:
+    properties:
+      avatar:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+    type: object
+  responses.UserInVerificationResponse:
+    properties:
+      avatar:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+    type: object
+  responses.UserInfo:
+    properties:
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+    type: object
+  responses.UserResponse:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      isBannedReview:
+        type: boolean
+      isVerifiedHost:
+        type: boolean
+      lastName:
+        type: string
+      permissions:
+        items:
+          type: string
+        type: array
+      roleId:
+        description: Role
+        type: integer
+      roleName:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  responses.UserSummary:
+    properties:
+      avatar:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+    type: object
+  responses.VerificationDetailItem:
+    properties:
+      id:
+        type: integer
+      idPhoto:
+        type: string
+      isResubmit:
+        type: boolean
+      previousRejectDescription:
+        type: string
+      rejectDescription:
+        type: string
+      selfieWithId:
+        type: string
+      status:
+        type: string
+      submittedAt:
+        type: string
+      user:
+        $ref: '#/definitions/responses.UserInVerificationResponse'
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/admin/action-logs/paginate:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated action logs
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get action logs
+      tags:
+      - Action Log Module (Version 1)
+  /api/v1/admin/dashboard:
+    get:
+      consumes:
+      - application/json
+      description: 'Get summary stats: pending reports, total users, active properties,
+        pending verifications'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.DashboardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Admin dashboard
+      tags:
+      - Admin Dashboard Module (Version 1)
+  /api/v1/admin/properties/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get property detail with host profile and ban status (admin)
+      parameters:
+      - description: property id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.AdminGetPropertyByIDResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Admin get property by ID
+      tags:
+      - Property Module (Version 1)
+  /api/v1/admin/properties/{id}/deactivate:
+    patch:
+      consumes:
+      - application/json
+      description: Deactivate a property and cancel pending/confirmed bookings (admin)
+      parameters:
+      - description: property id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: admin note
+        in: body
+        name: adminNote
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Admin deactivate property
+      tags:
+      - Property Module (Version 1)
+  /api/v1/admin/properties/{id}/unban:
+    patch:
+      consumes:
+      - application/json
+      description: Unban a property so the host can re-activate it (admin)
+      parameters:
+      - description: property id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: admin note
+        in: body
+        name: adminNote
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Admin unban property
+      tags:
+      - Property Module (Version 1)
+  /api/v1/admin/properties/{property_id}/unban:
+    patch:
+      consumes:
+      - application/json
+      description: Remove admin ban from a property, host will be able to reactivate
+        it
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Unban property
+      tags:
+      - Property Module (Version 1)
+  /api/v1/admin/properties/paginate:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated properties with host profile and ban status (admin)
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      - description: search query
+        in: query
+        name: search
+        type: string
+      - description: field to search by
+        in: query
+        name: searchBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Admin list properties
+      tags:
+      - Property Module (Version 1)
+  /api/v1/admin/reports/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get report detail by ID, response fields vary by type (property|review)
+      parameters:
+      - description: report id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetReportByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get report by ID
+      tags:
+      - Report Module (Version 1)
+  /api/v1/admin/reports/{id}/action:
+    patch:
+      consumes:
+      - application/json
+      description: 'Perform an action on a report. Property: dismiss_report|warn_user|deactivate_property.
+        Review: dismiss_report|warn_user|delete_review'
+      parameters:
+      - description: report id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: action
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ActionReport'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Action report
+      tags:
+      - Report Module (Version 1)
+  /api/v1/admin/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get user detail with roles and ban status (admin)
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.AdminGetUserByIDResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Admin get user by ID
+      tags:
+      - User Module (Version 1)
+  /api/v1/admin/users/{id}/deactivate-all-properties:
+    patch:
+      consumes:
+      - application/json
+      description: Deactivate all properties of a user and cancel active bookings
+        (admin)
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: admin note
+        in: body
+        name: adminNote
+        schema:
+          $ref: '#/definitions/dtos.AdminActionUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Admin deactivate all properties
+      tags:
+      - User Module (Version 1)
+  /api/v1/admin/users/{id}/unban-all-properties:
+    patch:
+      consumes:
+      - application/json
+      description: Unban all properties of a user (admin)
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: admin note
+        in: body
+        name: adminNote
+        schema:
+          $ref: '#/definitions/dtos.AdminActionUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Admin unban all properties
+      tags:
+      - User Module (Version 1)
+  /api/v1/admin/users/paginate:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated users with roles and ban status (admin)
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      - description: search query
+        in: query
+        name: search
+        type: string
+      - description: field to search by
+        in: query
+        name: searchBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Admin list users
+      tags:
+      - User Module (Version 1)
+  /api/v1/auth/encrypt-password:
+    post:
+      consumes:
+      - application/json
+      description: Encrypt password for testing purposes
+      parameters:
+      - description: Password to encrypt
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.EncryptPasswordDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      summary: Encrypt password
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/auth/forgot-password:
+    post:
+      consumes:
+      - application/json
+      description: Request password reset by sending OTP to email
+      parameters:
+      - description: Email address
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ForgotPasswordDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      summary: Forgot password
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/auth/google:
+    post:
+      consumes:
+      - application/json
+      description: Sign in (or sign up as guest) with a Google ID token from Google
+        Identity Services
+      parameters:
+      - description: Google ID token
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.GoogleSignInDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      summary: Sign in with Google
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/auth/profile:
+    get:
+      consumes:
+      - application/json
+      description: Get current user's profile information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      security:
+      - Bearer: []
+      summary: Get Profile
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/auth/refresh-token:
+    post:
+      consumes:
+      - application/json
+      description: Generate a new access token using refresh token
+      parameters:
+      - description: Refresh token
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.RefreshTokenDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      summary: Refresh access token
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/auth/resend-otp:
+    post:
+      consumes:
+      - application/json
+      description: Resend OTP code to user's email for account verification
+      parameters:
+      - description: Email address
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ResendOTPDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      summary: Resend OTP
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/auth/reset-password:
+    post:
+      consumes:
+      - application/json
+      description: Reset password using reset token from email
+      parameters:
+      - description: Reset password data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ResetPasswordDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      summary: Reset password
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/auth/sign-up:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account with email verification
+      parameters:
+      - description: Sign up data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.SignUpDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      summary: Sign up
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/auth/signin:
+    post:
+      consumes:
+      - application/json
+      description: Sign in with email and password
+      parameters:
+      - description: Sign in credentials
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.SignInDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      summary: Sign in
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/auth/verify-otp:
+    post:
+      consumes:
+      - application/json
+      description: Verify OTP code sent to user's email for account activation
+      parameters:
+      - description: Email and OTP code
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.VerifyOTPDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+      summary: Verify OTP
+      tags:
+      - Auth Module (Version 1)
+  /api/v1/bookings:
+    get:
+      consumes:
+      - application/json
+      description: Get all bookings for authenticated user with pagination support
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - default: created_at
+        description: Order by field
+        in: query
+        name: orderBy
+        type: string
+      - default: desc
+        description: Sort direction (asc/desc)
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all bookings (paginated)
+      tags:
+      - Booking Module (Version 1)
+    post:
+      consumes:
+      - application/json
+      description: Create a new booking with booking orders (guestId is automatically
+        set from authenticated user)
+      parameters:
+      - description: Booking data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateBooking'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.CreateBookingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create booking
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/bookings/{booking_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get booking by ID with full details (user can only access their
+        own bookings)
+      parameters:
+      - description: booking id
+        in: path
+        name: booking_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetBookingByIDResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get booking
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/bookings/{booking_id}/cancel:
+    patch:
+      consumes:
+      - application/json
+      description: Cancel a booking and return rooms to inventory (only pending or
+        confirmed bookings can be cancelled)
+      parameters:
+      - description: booking id
+        in: path
+        name: booking_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetBookingByIDResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Cancel booking
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/bookings/{booking_id}/confirm-payment:
+    patch:
+      consumes:
+      - application/json
+      description: Confirm payment for a booking and change status from pending to
+        confirmed
+      parameters:
+      - description: booking id
+        in: path
+        name: booking_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetBookingByIDResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Confirm booking payment
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/bookings/{id}/review:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a review for a completed booking (rating 1-5, only for successful
+        bookings)
+      parameters:
+      - description: Booking ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Rating (1-5)
+        in: formData
+        name: rating
+        required: true
+        type: integer
+      - description: Review comment (max 500 chars)
+        in: formData
+        name: comment
+        type: string
+      - description: Review images (multiple allowed)
+        in: formData
+        name: images
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.CreateBookingReviewResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create booking review
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/bookings/all:
+    get:
+      consumes:
+      - application/json
+      description: Get all bookings for authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetBookingsResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all bookings
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/chat-rooms:
+    get:
+      consumes:
+      - application/json
+      description: Get all chat rooms for the authenticated user, with the latest
+        message and the other participant's info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetChatRoomsResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all chat rooms
+      tags:
+      - Chat Module (Version 1)
+    post:
+      consumes:
+      - multipart/form-data
+      description: Find or create a chat room with a host, and optionally send an
+        initial message (text and/or images)
+      parameters:
+      - description: User ID of the person to chat with
+        in: formData
+        name: participantId
+        required: true
+        type: integer
+      - description: Text message content
+        in: formData
+        name: content
+        type: string
+      - description: Image attachments (can send multiple)
+        in: formData
+        name: images
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.CreateChatRoomResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create chat room
+      tags:
+      - Chat Module (Version 1)
+  /api/v1/chat-rooms/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a chat room and all its messages. Only participants of the
+        room can delete it.
+      parameters:
+      - description: chat room id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete chat room
+      tags:
+      - Chat Module (Version 1)
+    get:
+      consumes:
+      - application/json
+      description: Get a chat room with all messages and sender info. Only accessible
+        by room participants.
+      parameters:
+      - description: chat room id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetChatRoomByIdResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get chat room by ID
+      tags:
+      - Chat Module (Version 1)
+  /api/v1/chat-rooms/{id}/messages:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Send a text message and/or image attachments to an existing chat
+        room. Must be a participant of the room.
+      parameters:
+      - description: chat room id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Text message content
+        in: formData
+        name: content
+        type: string
+      - description: Image attachments (supports images or images[])
+        in: formData
+        name: images
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.SendMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Send message
+      tags:
+      - Chat Module (Version 1)
+  /api/v1/chat-rooms/{id}/messages/read:
+    patch:
+      consumes:
+      - application/json
+      description: Mark all unread messages in the chat room as read (only messages
+        sent by the other participant)
+      parameters:
+      - description: chat room id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Mark messages as read
+      tags:
+      - Chat Module (Version 1)
+  /api/v1/favorite-folders:
+    get:
+      consumes:
+      - application/json
+      description: Get favorite folders for authenticated user with pagination
+      parameters:
+      - default: 1
+        description: page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: page size
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List favorite folders with pagination
+      tags:
+      - Favorite Folder Module (Version 1)
+    post:
+      consumes:
+      - application/json
+      description: 'Add a property to favorite folder. Supports: create empty folder
+        (folderName only), create folder with property, add property to existing folder
+        (folderId + propertyId), or auto-name folder with property (propertyId only)'
+      parameters:
+      - description: Add property to favorite request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.AddPropertyToFavorite'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.AddPropertyToFavoriteResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Add property to favorite folder
+      tags:
+      - Favorite Folder Module (Version 1)
+  /api/v1/favorite-folders/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Soft delete a favorite folder
+      parameters:
+      - description: favorite folder id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.DeleteFolderResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete folder
+      tags:
+      - Favorite Folder Module (Version 1)
+    get:
+      consumes:
+      - application/json
+      description: Get favorite folder details with all properties
+      parameters:
+      - description: favorite folder id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetFavoriteFolderByIdResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get favorite folder by ID
+      tags:
+      - Favorite Folder Module (Version 1)
+    put:
+      consumes:
+      - application/json
+      description: Update the name of a favorite folder
+      parameters:
+      - description: favorite folder id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update folder name request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateFolderName'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.UpdateFolderNameResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update folder name
+      tags:
+      - Favorite Folder Module (Version 1)
+  /api/v1/favorite-folders/all:
+    get:
+      consumes:
+      - application/json
+      description: Get all favorite folders for authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetFavoriteFoldersResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all favorite folders
+      tags:
+      - Favorite Folder Module (Version 1)
+  /api/v1/favorite-properties/{propertyId}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove a property from all favorite folders of the authenticated
+        user
+      parameters:
+      - description: property id
+        in: path
+        name: propertyId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.RemovePropertyFromAllFoldersResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Remove property from all folders
+      tags:
+      - Favorite Folder Module (Version 1)
+  /api/v1/hosts/bookings/{booking_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get booking by ID for authenticated host (only bookings for host's
+        properties)
+      parameters:
+      - description: booking id
+        in: path
+        name: booking_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetBookingByIDForHostResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get booking for host
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/hosts/bookings/{booking_id}/success:
+    patch:
+      consumes:
+      - application/json
+      description: Mark a confirmed booking as successfully completed (only confirmed
+        bookings can be marked as completed)
+      parameters:
+      - description: booking id
+        in: path
+        name: booking_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetBookingByIDResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Mark booking as completed
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/hosts/bookings/all:
+    get:
+      consumes:
+      - application/json
+      description: Get all bookings for properties owned by authenticated host
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetBookingsForHostResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all bookings for host
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/hosts/bookings/paginate:
+    get:
+      consumes:
+      - application/json
+      description: Get all bookings for properties owned by authenticated host with
+        pagination support
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - default: created_at
+        description: Order by field
+        in: query
+        name: orderBy
+        type: string
+      - default: desc
+        description: Sort direction (asc/desc)
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all bookings for host (paginated)
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/hosts/facilities:
+    get:
+      consumes:
+      - application/json
+      description: get facilities with pagination, search and category filter
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: string
+      - description: page size
+        in: query
+        name: limit
+        type: string
+      - description: search query
+        in: query
+        name: search
+        type: string
+      - description: search by specific field (name or category name)
+        in: query
+        name: searchBy
+        type: string
+      - description: filter by category name
+        in: query
+        name: category
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List facilities
+      tags:
+      - Facility Module (Version 1)
+  /api/v1/hosts/facilities/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a facility with its category
+      parameters:
+      - description: facility id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetFacilityByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get facility by ID
+      tags:
+      - Facility Module (Version 1)
+  /api/v1/hosts/facilities/all:
+    get:
+      consumes:
+      - application/json
+      description: get all facilities with categories
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetFacilitiesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List all facilities
+      tags:
+      - Facility Module (Version 1)
+  /api/v1/hosts/facility-categories/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a facility category with its facilities
+      parameters:
+      - description: facility category id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetFacilityCategoryByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get facility category by ID
+      tags:
+      - Facility Category Module (Version 1)
+  /api/v1/hosts/facility-categories/all:
+    get:
+      consumes:
+      - application/json
+      description: get all facility categories with their facilities
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetFacilityCategoriesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List all facility categories
+      tags:
+      - Facility Category Module (Version 1)
+  /api/v1/hosts/pet-size-categories:
+    get:
+      consumes:
+      - application/json
+      description: get all pet size categories
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPetSizeCategoriesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List all pet size categories
+      tags:
+      - Pet Size Category Module (Version 1)
+  /api/v1/hosts/properties:
+    get:
+      consumes:
+      - application/json
+      description: Get properties for the authenticated host user with pagination
+        support
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: string
+      - description: page size
+        in: query
+        name: limit
+        type: string
+      - description: search query
+        in: query
+        name: search
+        type: string
+      - description: field to search by
+        in: query
+        name: searchBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get properties for host (paginated)
+      tags:
+      - Property Module (Version 1)
+  /api/v1/hosts/properties/{id}/images:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Add images to an existing property (host only)
+      parameters:
+      - description: Property ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Property images (can upload multiple)
+        in: formData
+        name: images
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Add property images
+      tags:
+      - Property Module (Version 1)
+  /api/v1/hosts/properties/{property_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get property by ID for the authenticated host user
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPropertyForHostByIDResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get property for host by ID
+      tags:
+      - Property Module (Version 1)
+  /api/v1/hosts/properties/{property_id}/bookings/{booking_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get booking by ID for a specific property owned by authenticated
+        host
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - description: booking id
+        in: path
+        name: booking_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetBookingByIDForPropertyResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get booking for property
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/hosts/properties/{property_id}/bookings/all:
+    get:
+      consumes:
+      - application/json
+      description: Get all bookings for a specific property owned by authenticated
+        host
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetBookingsForPropertyResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all bookings for property
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/hosts/properties/{property_id}/bookings/paginate:
+    get:
+      consumes:
+      - application/json
+      description: Get all bookings for a specific property owned by authenticated
+        host with pagination support
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - default: created_at
+        description: Order by field
+        in: query
+        name: orderBy
+        type: string
+      - default: desc
+        description: Sort direction (asc/desc)
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all bookings for property (paginated)
+      tags:
+      - Booking Module (Version 1)
+  /api/v1/hosts/properties/{property_id}/room-categories:
+    get:
+      consumes:
+      - application/json
+      description: get all room categories for a specific property with pets
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetRoomCategoriesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List room categories by property ID
+      tags:
+      - Room Category Module (Version 1)
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a new room category under a property
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - description: room category name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: total number of rooms
+        in: formData
+        name: totalRoom
+        required: true
+        type: integer
+      - description: number of pets allowed
+        in: formData
+        name: numberOfPets
+        type: integer
+      - description: base price
+        in: formData
+        name: basePrice
+        required: true
+        type: number
+      - description: pet size category id (single selection)
+        in: formData
+        name: petSizeCategoryId
+        type: integer
+      - description: pets array as JSON string (e.g., [1,2,3])
+        in: formData
+        name: pets
+        type: string
+      - description: facilities array as JSON string (e.g., [1,2,3])
+        in: formData
+        name: facilities
+        type: string
+      - description: room category images (multiple allowed)
+        in: formData
+        name: images
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create room category
+      tags:
+      - Room Category Module (Version 1)
+  /api/v1/hosts/properties/{property_id}/room-categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete room category under a property
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - description: room category id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Delete room category
+      tags:
+      - Room Category Module (Version 1)
+    get:
+      consumes:
+      - application/json
+      description: Get a room category with its pets under a property
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - description: room category id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetRoomCategoryByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get room category by ID
+      tags:
+      - Room Category Module (Version 1)
+    put:
+      consumes:
+      - multipart/form-data
+      description: Update room category under a property
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - description: room category id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: room category name
+        in: formData
+        name: name
+        type: string
+      - description: total number of rooms
+        in: formData
+        name: totalRoom
+        type: integer
+      - description: number of pets allowed
+        in: formData
+        name: numberOfPets
+        type: integer
+      - description: base price
+        in: formData
+        name: basePrice
+        type: number
+      - description: pet size category id
+        in: formData
+        name: petSizeCategoryId
+        type: integer
+      - description: pets array as JSON string (e.g., [1,2,3])
+        in: formData
+        name: pets
+        type: string
+      - description: facilities array as JSON string (e.g., [1,2,3])
+        in: formData
+        name: facilities
+        type: string
+      - description: new room category images to upload (multiple allowed)
+        in: formData
+        name: images
+        type: file
+      - description: image IDs to delete as JSON string (e.g., [1,2,3])
+        in: formData
+        name: deleteImageIds
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update room category
+      tags:
+      - Room Category Module (Version 1)
+  /api/v1/hosts/properties/all:
+    get:
+      consumes:
+      - application/json
+      description: Get all properties for the authenticated host user without pagination
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPropertiesForHostResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get all properties for host
+      tags:
+      - Property Module (Version 1)
+  /api/v1/hosts/property-types/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a property type
+      parameters:
+      - description: property type id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPropertyTypeByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get property type by ID
+      tags:
+      - Property Type Module (Version 1)
+  /api/v1/hosts/property-types/all:
+    get:
+      consumes:
+      - application/json
+      description: get all property types
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPropertyTypesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List all property types
+      tags:
+      - Property Type Module (Version 1)
+  /api/v1/notifications:
+    delete:
+      consumes:
+      - application/json
+      description: Delete all notifications for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete all notifications
+      tags:
+      - Notification Module (Version 1)
+    get:
+      consumes:
+      - application/json
+      description: Get all notifications for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetNotificationsResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get notifications
+      tags:
+      - Notification Module (Version 1)
+  /api/v1/notifications/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a specific notification by ID for the authenticated user
+      parameters:
+      - description: Notification ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete notification by ID
+      tags:
+      - Notification Module (Version 1)
+  /api/v1/pets:
+    get:
+      consumes:
+      - application/json
+      description: get all pets
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPetsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List all pets
+      tags:
+      - Pet Module (Version 1)
+  /api/v1/pets/{petId}/pet-breeds:
+    get:
+      consumes:
+      - application/json
+      description: get pet breeds with pagination by pet ID
+      parameters:
+      - description: pet id
+        in: path
+        name: petId
+        required: true
+        type: integer
+      - description: page number
+        in: query
+        name: page
+        type: string
+      - description: page size
+        in: query
+        name: limit
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List pet breeds
+      tags:
+      - Pet Breed Module (Version 1)
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a new breed under a pet
+      parameters:
+      - description: pet id
+        in: path
+        name: petId
+        required: true
+        type: integer
+      - description: breed name
+        in: formData
+        name: breed
+        required: true
+        type: string
+      - description: 'breed image (max 10MB, formats: jpg, jpeg, png, webp)'
+        in: formData
+        name: image
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Create pet breed
+      tags:
+      - Pet Breed Module (Version 1)
+  /api/v1/pets/{petId}/pet-breeds/{breedId}:
+    get:
+      consumes:
+      - application/json
+      description: Get a pet breed by ID
+      parameters:
+      - description: pet id
+        in: path
+        name: petId
+        required: true
+        type: integer
+      - description: breed id
+        in: path
+        name: breedId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPetBreedByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get pet breed by ID
+      tags:
+      - Pet Breed Module (Version 1)
+    patch:
+      consumes:
+      - multipart/form-data
+      description: Update an existing pet breed by ID
+      parameters:
+      - description: pet id
+        in: path
+        name: petId
+        required: true
+        type: integer
+      - description: breed id
+        in: path
+        name: breedId
+        required: true
+        type: integer
+      - description: breed name
+        in: formData
+        name: breed
+        type: string
+      - description: 'breed image (max 10MB, formats: jpg, jpeg, png, webp)'
+        in: formData
+        name: image
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Update pet breed
+      tags:
+      - Pet Breed Module (Version 1)
+  /api/v1/pets/{petId}/pet-breeds/all:
+    get:
+      consumes:
+      - application/json
+      description: get all pet breeds by pet ID
+      parameters:
+      - description: pet id
+        in: path
+        name: petId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPetBreedsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List all pet breeds
+      tags:
+      - Pet Breed Module (Version 1)
+  /api/v1/profiles/pet-profiles:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a new pet profile (guestId is automatically set from authenticated
+        user)
+      parameters:
+      - description: Pet name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: Pet sex (male, female, other)
+        in: formData
+        name: sex
+        required: true
+        type: string
+      - description: Birth date (YYYY-MM-DD)
+        in: formData
+        name: birthDate
+        required: true
+        type: string
+      - description: Contact name
+        in: formData
+        name: contactName
+        required: true
+        type: string
+      - description: Contact phone
+        in: formData
+        name: contactPhone
+        required: true
+        type: string
+      - description: Note
+        in: formData
+        name: note
+        type: string
+      - description: Pet type ID
+        in: formData
+        name: petId
+        required: true
+        type: integer
+      - description: Pet breed ID
+        in: formData
+        name: petBreedId
+        required: true
+        type: integer
+      - description: Pet size category ID
+        in: formData
+        name: petSizeId
+        required: true
+        type: integer
+      - description: Pet energy ID
+        in: formData
+        name: petEnergyId
+        required: true
+        type: integer
+      - description: 'Pet image (max 10MB, formats: jpg, jpeg, png, webp, gif)'
+        in: formData
+        name: image
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.CreatePetProfileResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create pet profile
+      tags:
+      - Pet Profile Module (Version 1)
+  /api/v1/profiles/pet-profiles/{pet_profile_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing pet profile (soft delete)
+      parameters:
+      - description: pet profile id
+        in: path
+        name: pet_profile_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete pet profile
+      tags:
+      - Pet Profile Module (Version 1)
+    get:
+      consumes:
+      - application/json
+      description: Get pet profile by ID with full details including contact, breed,
+        and energy rating
+      parameters:
+      - description: pet profile id
+        in: path
+        name: pet_profile_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPetProfileByIDResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get pet profile
+      tags:
+      - Pet Profile Module (Version 1)
+    put:
+      consumes:
+      - multipart/form-data
+      description: Update an existing pet profile
+      parameters:
+      - description: pet profile id
+        in: path
+        name: pet_profile_id
+        required: true
+        type: integer
+      - description: Pet name
+        in: formData
+        name: name
+        type: string
+      - description: Contact name
+        in: formData
+        name: contactName
+        type: string
+      - description: Contact phone
+        in: formData
+        name: contactPhone
+        type: string
+      - description: Note
+        in: formData
+        name: note
+        type: string
+      - description: Pet size category ID
+        in: formData
+        name: petSizeId
+        type: integer
+      - description: Pet energy ID
+        in: formData
+        name: petEnergyId
+        type: integer
+      - description: 'Pet image (max 10MB, formats: jpg, jpeg, png, webp, gif)'
+        in: formData
+        name: image
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update pet profile
+      tags:
+      - Pet Profile Module (Version 1)
+  /api/v1/profiles/pet-profiles/all:
+    get:
+      consumes:
+      - application/json
+      description: Get all pet profiles with pet type name and calculated age
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPetProfilesResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all pet profiles
+      tags:
+      - Pet Profile Module (Version 1)
+  /api/v1/properties:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        get properties with optional filtering modes:
+        - Top Rated: ?minRating=4.0 (filter by avg rating, sorted DESC)
+        - Best Value: ?sortBy=price (filter by below-average price, sorted ASC)
+        - New Listings: ?days=30 (published within N days, sorted by newest; fallback to 20 most recent if < 5 results)
+        - Trending: ?sortBy=trending (most booked properties, sorted by bookingCount DESC)
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: string
+      - description: page size
+        in: query
+        name: limit
+        type: string
+      - description: search query
+        in: query
+        name: search
+        type: string
+      - description: field to search by
+        in: query
+        name: searchBy
+        type: string
+      - description: 'Top Rated: minimum avg rating filter (e.g. 4.0)'
+        in: query
+        name: minRating
+        type: number
+      - description: 'Sort mode: ''price'' (Best Value) or ''trending'' (Most Booked)'
+        in: query
+        name: sortBy
+        type: string
+      - description: 'New Listings: published within last N days (e.g. 30)'
+        in: query
+        name: days
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List properties
+      tags:
+      - Property Module (Version 1)
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create an new property (hostId is automatically set from authenticated
+        user)
+      parameters:
+      - description: property title
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: property description
+        in: formData
+        name: description
+        type: string
+      - description: property base price
+        in: formData
+        name: basePrice
+        required: true
+        type: integer
+      - description: property type id
+        in: formData
+        name: propertyTypeId
+        type: integer
+      - description: facilities array as JSON string (e.g., [1,2,3])
+        in: formData
+        name: facilities
+        type: string
+      - description: property images (multiple files allowed)
+        in: formData
+        name: images
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.CreatePropertyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create property
+      tags:
+      - Property Module (Version 1)
+  /api/v1/properties/{property_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete property
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Delete property
+      tags:
+      - Property Module (Version 1)
+    get:
+      consumes:
+      - application/json
+      description: Get property
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetPropertyByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get property
+      tags:
+      - Property Module (Version 1)
+    put:
+      consumes:
+      - multipart/form-data
+      description: Update an existing property
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - description: property title
+        in: formData
+        name: title
+        type: string
+      - description: property description
+        in: formData
+        name: description
+        type: string
+      - description: latitude
+        in: formData
+        name: latitude
+        type: number
+      - description: longitude
+        in: formData
+        name: longitude
+        type: number
+      - description: address
+        in: formData
+        name: address
+        type: string
+      - description: province
+        in: formData
+        name: province
+        type: string
+      - description: district
+        in: formData
+        name: district
+        type: string
+      - description: subdistrict
+        in: formData
+        name: subdistrict
+        type: string
+      - description: country
+        in: formData
+        name: country
+        type: string
+      - description: zipcode
+        in: formData
+        name: zipcode
+        type: string
+      - description: host id
+        in: formData
+        name: hostId
+        type: integer
+      - description: property type id
+        in: formData
+        name: propertyTypeId
+        type: integer
+      - description: property images
+        in: formData
+        name: images
+        type: file
+      - description: image IDs to delete as JSON string (e.g., [1,2,3])
+        in: formData
+        name: deleteImageIds
+        type: string
+      - description: facilities array as JSON string (e.g., [1,2,3])
+        in: formData
+        name: facilities
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update property
+      tags:
+      - Property Module (Version 1)
+  /api/v1/properties/{property_id}/is-active:
+    patch:
+      consumes:
+      - application/json
+      description: Update property IsActive status (true/false)
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - description: IsActive status
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdatePropertyIsActive'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Update property IsActive
+      tags:
+      - Property Module (Version 1)
+  /api/v1/properties/{property_id}/room-categories/search:
+    get:
+      consumes:
+      - application/json
+      description: Search for room categories with available rooms based on check-in/out
+        dates and number of pets
+      parameters:
+      - description: property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - description: check-in date (YYYY-MM-DD)
+        in: query
+        name: checkInDate
+        required: true
+        type: string
+      - description: check-out date (YYYY-MM-DD)
+        in: query
+        name: checkOutDate
+        required: true
+        type: string
+      - description: number of pets
+        in: query
+        name: numberOfPets
+        required: true
+        type: integer
+      - description: 'pet size category id filter: small id (all rooms), medium id
+          (medium+large), large id (large only)'
+        in: query
+        name: petSizeId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.SearchAvailableRoomCategoriesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Search available room categories
+      tags:
+      - Room Category Module (Version 1)
+  /api/v1/properties/all:
+    get:
+      consumes:
+      - application/json
+      description: get all properties without pagination
+      parameters:
+      - description: search query
+        in: query
+        name: search
+        type: string
+      - description: field to search by
+        in: query
+        name: searchBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetAllPropertiesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List all properties
+      tags:
+      - Property Module (Version 1)
+  /api/v1/properties/hosts/{host_id}/profile:
+    get:
+      consumes:
+      - application/json
+      description: Get host profile including avgRating, reviewCount, totalProperties
+        and all properties
+      parameters:
+      - description: host user id
+        in: path
+        name: host_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetHostProfileResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get host public profile
+      tags:
+      - Property Module (Version 1)
+  /api/v1/properties/hosts/{host_id}/reviews:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated reviews across all properties of a host
+      parameters:
+      - description: host user id
+        in: path
+        name: host_id
+        required: true
+        type: integer
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get host reviews
+      tags:
+      - Property Module (Version 1)
+  /api/v1/properties/recommend:
+    get:
+      consumes:
+      - application/json
+      description: Get property recommendations for the authenticated user from ML
+        service (paginated)
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: string
+      - description: page size
+        in: query
+        name: limit
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get recommended properties
+      tags:
+      - Property Module (Version 1)
+  /api/v1/properties/recommend/property/{property_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get property recommendations similar to the given property from
+        ML service
+      parameters:
+      - description: source property id
+        in: path
+        name: property_id
+        required: true
+        type: integer
+      - description: number of recommendations to return
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetAllPropertiesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get recommended properties by property
+      tags:
+      - Property Module (Version 1)
+  /api/v1/report-categories:
+    get:
+      consumes:
+      - application/json
+      description: Get all report categories, optionally filtered by type (property,
+        review)
+      parameters:
+      - description: 'filter by type: property, review'
+        in: query
+        name: type
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetReportCategoriesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List all report categories
+      tags:
+      - Report Category Module (Version 1)
+  /api/v1/reports:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated reports, filter by type (review|property)
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      - description: 'filter by type: review or property'
+        in: query
+        name: type
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List reports
+      tags:
+      - Report Module (Version 1)
+  /api/v1/reports/me:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated reports created by the current user, filter by type
+        (review|property)
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      - description: 'filter by type: review or property'
+        in: query
+        name: type
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get my reports
+      tags:
+      - Report Module (Version 1)
+  /api/v1/reports/me/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get detail of a report created by the current user
+      parameters:
+      - description: report id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetReportByIDResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get my report by ID
+      tags:
+      - Report Module (Version 1)
+  /api/v1/reports/property:
+    post:
+      consumes:
+      - application/json
+      description: Report a property, reportCategoryId must be type=property
+      parameters:
+      - description: Report property data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateReportProperty'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.CreateReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create report property
+      tags:
+      - Report Module (Version 1)
+  /api/v1/reports/review:
+    post:
+      consumes:
+      - application/json
+      description: Report a review (booking), reportCategoryId must be type=review
+      parameters:
+      - description: Report review data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateReportReview'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.CreateReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create report review
+      tags:
+      - Report Module (Version 1)
+  /api/v1/reports/unban-property:
+    post:
+      consumes:
+      - application/json
+      description: 'Request to unban a property, reportCategoryId must be type=unban_property.
+        propertyId is optional: set = unban single property, omit = unban all properties
+        of host'
+      parameters:
+      - description: Unban property request data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateReportUnbanProperty'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.CreateReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create report unban property
+      tags:
+      - Report Module (Version 1)
+  /api/v1/reports/unban-review:
+    post:
+      consumes:
+      - application/json
+      description: Request to unban a user from writing reviews, reportCategoryId
+        must be type=unban_review
+      parameters:
+      - description: Unban review request data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateReportUnbanReview'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.CreateReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create report unban review
+      tags:
+      - Report Module (Version 1)
+  /api/v1/user-behaviors:
+    get:
+      consumes:
+      - application/json
+      description: Get all behavior records for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetUserBehaviorsResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get all user behaviors
+      tags:
+      - User Behavior Module (Version 1)
+  /api/v1/user-behaviors/view-property/{propertyId}:
+    post:
+      consumes:
+      - application/json
+      description: Record that the authenticated user viewed a property
+      parameters:
+      - description: Property ID
+        in: path
+        name: propertyId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.CreateUserBehaviorResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Record view property behavior
+      tags:
+      - User Behavior Module (Version 1)
+  /api/v1/user-recent-views/{propertyId}:
+    post:
+      consumes:
+      - application/json
+      description: Record that the authenticated user viewed a specific property
+      parameters:
+      - description: Property ID
+        in: path
+        name: propertyId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.CreateUserRecentViewResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Record recent property view
+      tags:
+      - User Recent View Module (Version 1)
+  /api/v1/user-verifications:
+    get:
+      consumes:
+      - application/json
+      description: Get all user verifications (admin)
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      - description: 'filter by status: pending, approved, rejected'
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List verifications
+      tags:
+      - User Verification Module (Version 1)
+    post:
+      consumes:
+      - multipart/form-data
+      description: Submit identity verification with ID photo and selfie
+      parameters:
+      - description: ID card photo (jpg, jpeg, png, max 10MB)
+        in: formData
+        name: idPhoto
+        required: true
+        type: file
+      - description: Selfie with ID card (jpg, jpeg, png, max 10MB)
+        in: formData
+        name: selfieWithId
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Submit verification
+      tags:
+      - User Verification Module (Version 1)
+  /api/v1/user-verifications/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get verification detail (admin)
+      parameters:
+      - description: verification id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetVerificationByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get verification by ID
+      tags:
+      - User Verification Module (Version 1)
+  /api/v1/user-verifications/{id}/approve:
+    patch:
+      consumes:
+      - application/json
+      description: Approve a pending user verification (admin)
+      parameters:
+      - description: verification id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Approve verification
+      tags:
+      - User Verification Module (Version 1)
+  /api/v1/user-verifications/{id}/reject:
+    patch:
+      consumes:
+      - application/json
+      description: Reject a pending user verification with a reason (admin)
+      parameters:
+      - description: verification id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: reason for rejection
+        in: body
+        name: rejectDescription
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Reject verification
+      tags:
+      - User Verification Module (Version 1)
+  /api/v1/user-verifications/me:
+    get:
+      consumes:
+      - application/json
+      description: Get current user's latest verification status
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetVerificationByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get my verification
+      tags:
+      - User Verification Module (Version 1)
+  /api/v1/users:
+    get:
+      consumes:
+      - application/json
+      description: get users
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: string
+      - description: page size
+        in: query
+        name: limit
+        type: string
+      - description: search query
+        in: query
+        name: search
+        type: string
+      - description: field to search by
+        in: query
+        name: searchBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/paginator.Pagination'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: List users
+      tags:
+      - User Module (Version 1)
+  /api/v1/users/{user_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user
+      parameters:
+      - description: user id
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Delete user
+      tags:
+      - User Module (Version 1)
+    get:
+      consumes:
+      - application/json
+      description: Get user
+      parameters:
+      - description: user id
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetUserByIDResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Get user
+      tags:
+      - User Module (Version 1)
+    put:
+      consumes:
+      - multipart/form-data
+      description: Update an existing user
+      parameters:
+      - description: user id
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: user first name
+        in: formData
+        name: firstName
+        type: string
+      - description: user last name
+        in: formData
+        name: lastName
+        type: string
+      - description: 'user avatar image (max 10MB, formats: jpg, jpeg, png, webp,
+          gif)'
+        in: formData
+        name: avatar
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Invalid file format, file size too large, or invalid characters
+            in name
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Update user
+      tags:
+      - User Module (Version 1)
+  /api/v1/users/{user_id}/change-password:
+    patch:
+      consumes:
+      - application/json
+      description: Change user password
+      parameters:
+      - description: user id
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: old password
+        in: body
+        name: oldPassword
+        required: true
+        schema:
+          type: string
+      - description: new password
+        in: body
+        name: newPassword
+        required: true
+        schema:
+          type: string
+      - description: confirm new password
+        in: body
+        name: confirmPassword
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Password not match or new password same as old
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Change Password
+      tags:
+      - User Module (Version 1)
+  /api/v1/users/{user_id}/roles:
+    patch:
+      consumes:
+      - application/json
+      description: Assign a role to a user by role name (admin)
+      parameters:
+      - description: user id
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: role name
+        in: body
+        name: roleName
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http_response.OkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.ErrorResponse'
+      summary: Add role to user
+      tags:
+      - User Module (Version 1)
+  /health:
+    get:
+      description: check the API status
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Healthcheck
+      tags:
+      - Healthcheck
+swagger: "2.0"

@@ -1,0 +1,620 @@
+// DBML - CP25NK2-CORE-SERVICE
+// Generated from Go models in src/models/
+// Docs: https://dbml.dbdiagram.io/docs
+
+// ==================== ENUMS ====================
+
+Enum booking_status {
+  pending
+  confirmed
+  cancelled
+  successful
+}
+
+Enum pet_sex {
+  male
+  female
+  other
+}
+
+Enum audit_log_action {
+  view
+  create
+  update
+  delete
+}
+
+Enum notification_category {
+  message
+  reminder
+  news
+  alert
+}
+
+Enum notification_type {
+  success
+  info
+  warning
+  error
+  default
+}
+
+Enum report_status {
+  pending
+  resolved
+  dismissed
+}
+
+Enum report_action {
+  dismiss_report
+  warn_user
+  deactivate_property
+  delete_review
+  ban_user_review
+  deactivate_all_properties
+  unban_property
+  unban_all_properties
+  unban_review
+}
+
+Enum report_type {
+  review
+  property
+  unban_property
+  unban_review
+}
+
+Enum verification_status {
+  pending
+  approved
+  rejected
+  revoked
+}
+
+// ==================== AUTH / USER ====================
+
+Table users {
+  id int [pk, increment]
+  email varchar(100) [not null, unique]
+  first_name varchar(100)
+  last_name varchar(100)
+  avatar text
+  phone varchar(20)
+  password text
+  reset_password_token text
+  reset_password_expired_at timestamp
+  otp varchar(6)
+  otp_expired_at timestamp
+  is_verified boolean [default: false]
+  is_become_to_host boolean [default: false]
+  is_verified_host boolean [default: false]
+  is_banned_review boolean [default: false]
+  is_banned_all_properties boolean [default: false]
+  banned_at timestamp
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Table roles {
+  id int [pk, increment]
+  name varchar(100) [not null, unique]
+  label varchar(100)
+  description text
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Table user_roles {
+  user_id int [ref: > users.id]
+  role_id int [ref: > roles.id]
+}
+
+Table group_permissions {
+  id int [pk, increment]
+  name varchar(100) [not null, unique]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table permissions {
+  id int [pk, increment]
+  name varchar(100) [not null, unique]
+  description text
+  group_permission_id int
+  menu_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: permissions.group_permission_id > group_permissions.id
+
+Table roles_permissions {
+  role_id int [ref: > roles.id]
+  permission_id int [ref: > permissions.id]
+}
+
+// ==================== USER VERIFICATION ====================
+
+Table user_verifications {
+  id int [pk, increment]
+  user_id int [not null]
+  status verification_status [not null, default: 'pending']
+  is_resubmit boolean [not null, default: false]
+  submitted_at timestamp [not null]
+  reject_description text
+  previous_reject_description text
+  id_photo text [not null]
+  selfie_with_id text [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: user_verifications.user_id > users.id
+
+// ==================== PROPERTY ====================
+
+Table property_types {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  label varchar(100) [default: '']
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Table properties {
+  id int [pk, increment]
+  title varchar(255) [not null]
+  description text
+  address text
+  province varchar(100)
+  district varchar(100)
+  subdistrict varchar(100)
+  country varchar(100)
+  zipcode varchar(10)
+  latitude float
+  longitude float
+  is_active boolean [default: false]
+  is_banned_by_admin boolean [default: false]
+  is_banned_before_account_ban boolean [default: false]
+  report_count int [default: 0]
+  published_at timestamp
+  host_id int [not null]
+  property_type_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: properties.host_id > users.id
+Ref: properties.property_type_id > property_types.id
+
+Table property_images {
+  id int [pk, increment]
+  file_name varchar(255)
+  file_path text
+  file_content_type varchar(100)
+  file_extension_name varchar(50)
+  file_size int
+  property_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: property_images.property_id > properties.id
+
+Table facility_categories {
+  id int [pk, increment]
+  name varchar(255) [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Table facilities {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  category_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: facilities.category_id > facility_categories.id
+
+Table properties_has_facilities {
+  property_id int [ref: > properties.id]
+  facility_id int [ref: > facilities.id]
+}
+
+// ==================== ROOM CATEGORY ====================
+
+Table pet_size_categories {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  code int [not null, unique]
+  min int [not null]
+  max int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Table room_categories {
+  id int [pk, increment]
+  name varchar(255)
+  total_room int
+  number_of_pets int
+  base_price decimal(13,2)
+  property_id int
+  pet_size_category_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: room_categories.property_id > properties.id
+Ref: room_categories.pet_size_category_id > pet_size_categories.id
+
+Table room_category_has_facilities {
+  room_category_id int [ref: > room_categories.id]
+  facility_id int [ref: > facilities.id]
+}
+
+Table room_has_pets {
+  room_category_id int [ref: > room_categories.id]
+  pet_id int [ref: > pets.id]
+}
+
+Table room_category_images {
+  id int [pk, increment]
+  file_name varchar(255)
+  file_path text
+  file_content_type varchar(100)
+  file_extension_name varchar(50)
+  file_size int
+  room_category_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: room_category_images.room_category_id > room_categories.id
+
+Table room_category_calendars {
+  id int [pk, increment]
+  date date [not null]
+  available_rooms int [not null]
+  booked_rooms int [default: 0]
+  unavailable_rooms int [default: 0]
+  price_adjustment decimal(13,2) [default: 0]
+  room_category_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: room_category_calendars.room_category_id > room_categories.id
+
+// ==================== BOOKING ====================
+
+Table bookings {
+  id int [pk, increment]
+  check_in_date date [not null]
+  check_out_date date [not null]
+  number_of_pets int [default: 0]
+  total_price decimal(13,2)
+  booking_status booking_status [default: 'pending']
+  guest_note varchar(255)
+  rating int
+  comment varchar(500)
+  successed_at timestamp
+  confirmed_at timestamp
+  reviewed_at timestamp
+  guest_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: bookings.guest_id > users.id
+
+Table booking_orders {
+  id int [pk, increment]
+  check_in_date date [not null]
+  check_out_date date [not null]
+  rooms_booked int [not null]
+  price_per_room decimal(13,2) [not null]
+  total_price decimal(13,2) [not null]
+  room_category_id int [not null]
+  room_type_id int
+  property_id int [not null]
+  booking_id int [not null]
+  room_category_calendar_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: booking_orders.room_category_id > room_categories.id
+Ref: booking_orders.room_type_id > room_categories.id
+Ref: booking_orders.property_id > properties.id
+Ref: booking_orders.booking_id > bookings.id
+Ref: booking_orders.room_category_calendar_id > room_category_calendars.id
+
+Table booking_pet_profiles {
+  booking_id int [ref: > bookings.id]
+  pet_profile_id int [ref: > pet_profiles.id]
+}
+
+Table booking_review_images {
+  id int [pk, increment]
+  file_name varchar(255)
+  file_path text
+  file_content_type varchar(100)
+  file_extension_name varchar(50)
+  file_size int
+  booking_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: booking_review_images.booking_id > bookings.id
+
+// ==================== PET ====================
+
+Table pets {
+  id int [pk, increment]
+  name varchar(50) [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Table pet_breeds {
+  id int [pk, increment]
+  breed varchar(100) [not null]
+  image_url text
+  pet_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: pet_breeds.pet_id > pets.id
+
+Table pet_profile_energies {
+  id int [pk, increment]
+  rating int [not null]
+  description text
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table pet_profiles {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  image text
+  pet_sex pet_sex
+  birth_date date
+  contact_name varchar(100) [not null]
+  contact_phone varchar(20) [not null]
+  note text
+  guest_id int [not null]
+  breed_id int [not null]
+  pet_type_id int [not null]
+  pet_energy_id int [not null]
+  pet_size_category_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: pet_profiles.guest_id > users.id
+Ref: pet_profiles.breed_id > pet_breeds.id
+Ref: pet_profiles.pet_type_id > pets.id
+Ref: pet_profiles.pet_energy_id > pet_profile_energies.id
+Ref: pet_profiles.pet_size_category_id > pet_size_categories.id
+
+// ==================== FAVORITE ====================
+
+Table favorite_folders {
+  id int [pk, increment]
+  name varchar(255) [not null]
+  user_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: favorite_folders.user_id > users.id
+
+Table favorite_properties {
+  folder_id int [ref: > favorite_folders.id]
+  property_id int [ref: > properties.id]
+}
+
+// ==================== NOTIFICATION ====================
+
+Table notification_actions {
+  id int [pk, increment]
+  name varchar(100) [not null, unique]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table notifications {
+  id int [pk, increment]
+  title varchar(100) [not null]
+  message text
+  category notification_category
+  type notification_type
+  is_read boolean [default: false]
+  reference_table varchar(100)
+  reference_id int
+  user_id int
+  role_id int
+  notification_action_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: notifications.user_id > users.id
+Ref: notifications.role_id > roles.id
+Ref: notifications.notification_action_id > notification_actions.id
+
+// ==================== AUDIT / ACTION LOG ====================
+
+Table audit_logs {
+  id varchar(255) [pk]
+  model_name varchar(255)
+  messages text
+  record_id varchar(255)
+  action audit_log_action
+  old_value text
+  new_value text
+  edit_value text
+  user_agent varchar(500)
+  user_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: audit_logs.user_id > users.id
+
+Table action_logs {
+  id int [pk, increment]
+  model_name varchar(255)
+  messages text
+  record_id varchar(255)
+  action varchar(50)
+  actor_id int
+  target_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: action_logs.actor_id > users.id
+Ref: action_logs.target_id > users.id
+
+// ==================== REPORT ====================
+
+Table report_categories {
+  id int [pk, increment]
+  name varchar(255) [not null]
+  label varchar(255) [default: '']
+  type report_type [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table reports {
+  id int [pk, increment]
+  description text
+  status report_status [default: 'pending']
+  admin_note text
+  resolved_action report_action
+  report_category_id int [not null]
+  reporter_id int [not null]
+  booking_id int
+  property_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: reports.report_category_id > report_categories.id
+Ref: reports.reporter_id > users.id
+Ref: reports.booking_id > bookings.id
+Ref: reports.property_id > properties.id
+
+Table report_images {
+  id int [pk, increment]
+  file_name varchar(255)
+  file_path text
+  file_content_type varchar(100)
+  file_extension_name varchar(50)
+  file_size int
+  report_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  deleted_at timestamp
+}
+
+Ref: report_images.report_id > reports.id
+
+// ==================== CHAT ====================
+
+Table chat_rooms {
+  id int [pk, increment]
+  last_message_at timestamp
+  participant_1_id int [not null]
+  participant_2_id int [not null]
+  last_message_id int
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (participant_1_id, participant_2_id) [unique, name: 'idx_chat_room_pair']
+  }
+}
+
+Ref: chat_rooms.participant_1_id > users.id
+Ref: chat_rooms.participant_2_id > users.id
+
+Table chat_messages {
+  id int [pk, increment]
+  content text [not null]
+  is_deleted boolean [default: false]
+  read_at timestamp
+  room_id int [not null]
+  sender_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: chat_rooms.last_message_id > chat_messages.id
+Ref: chat_messages.room_id > chat_rooms.id
+Ref: chat_messages.sender_id > users.id
+
+Table chat_message_attachments {
+  id int [pk, increment]
+  file_name varchar(255)
+  file_path text
+  file_content_type varchar(100)
+  file_extension_name varchar(50)
+  file_size int
+  message_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: chat_message_attachments.message_id > chat_messages.id
+
+// ==================== USER BEHAVIOR / RECENT VIEW ====================
+
+Table user_behavior_categories {
+  id int [pk, increment]
+  name varchar(100) [not null, unique]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table user_behaviors {
+  id int [pk, increment]
+  reference_table varchar(100) [not null]
+  reference_record varchar(255) [not null]
+  user_id int [not null]
+  behavior_category_id int [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: user_behaviors.user_id > users.id
+Ref: user_behaviors.behavior_category_id > user_behavior_categories.id
+

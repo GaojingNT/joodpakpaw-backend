@@ -1,0 +1,35 @@
+name: Deploy to VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Pull latest code
+      run: |
+        cd ~/CP25NK2-CORE-SERVICE
+        git fetch origin
+        git reset --hard origin/main
+
+    - name: Build Docker image
+      run: docker build --build-arg ENV_FILE=.env -t catbnb-api ~/CP25NK2-CORE-SERVICE
+
+    - name: Deploy container
+      run: |
+        docker rm -f catbnb-api || true
+        docker run -d \
+          --name catbnb-api \
+          --network catbnb-network \
+          --restart always \
+          -p 8000:8000 -p 8001:8001 \
+          -v ~/CP25NK2-CORE-SERVICE/.env:/app/.env \
+          -v ~/CP25NK2-CORE-SERVICE/storage:/app/storage \
+          catbnb-api
+
+    - name: Show logs
+      run: docker logs --tail 20 catbnb-api
