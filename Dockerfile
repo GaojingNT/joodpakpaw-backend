@@ -1,8 +1,5 @@
 FROM golang:1.24-alpine AS build-stage
 
-# Build argument for environment file selection
-ARG ENV_FILE=.env.dev
-
 # Set working directory
 WORKDIR /app
 
@@ -25,9 +22,6 @@ RUN go build -v -o /usr/local/bin/app
 # --- Production stage ---
 FROM golang:1.24-alpine AS production-stage
 
-# Build argument for environment file selection
-ARG ENV_FILE=.env.dev
-
 # Set constant environment variables area
 ENV TZ="Asia/Bangkok"
 
@@ -36,8 +30,7 @@ WORKDIR /app
 # Copy executable file from build-stage
 COPY --from=build-stage /usr/local/bin/app /usr/local/bin/app
 
-# Copy env file from build-stage (use build arg to select which env file)
-COPY --from=build-stage /app/${ENV_FILE} /app/.env
+# The .env file is not baked into the image; mount it at runtime (e.g. -v ./backend.env:/app/.env:ro)
 
 # Update OS packages
 RUN apk update && apk upgrade

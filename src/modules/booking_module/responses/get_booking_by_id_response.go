@@ -12,7 +12,7 @@ type GetBookingByIDResponse struct {
 	TotalPrice    float64              `json:"totalPrice"`
 	BookingStatus models.BookingStatus `json:"bookingStatus"`
 	GuestNote     string               `json:"guestNote,omitempty"`
-	Rating        *int                 `json:"rating",omitempty"`
+	Rating        *int                 `json:"rating"`
 	Comment       string               `json:"comment,omitempty"`
 	SuccessedAt   string               `json:"successedAt,omitempty"`
 	ConfirmedAt   string               `json:"confirmedAt,omitempty"`
