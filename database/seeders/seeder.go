@@ -20,6 +20,7 @@ func SeedDatabase(db *gorm.DB) {
 	SeedPets(db)
 	SeedPetBreeds(db)
 	SeedPetSizeCategories(db)
+	SeedPetProfileEnergies(db)
 	SeedFacilityCategoriesWithFacilities(db)
 	SeedUserBehaviorCategories(db)
 	SeedReportCategories(db)
